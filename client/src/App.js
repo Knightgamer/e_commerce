@@ -66,6 +66,14 @@ const App = () => {
                 Checkout
               </Link>
             </li>
+            <li>
+              <Link
+                to="/products-management"
+                className="text-gray-600 hover:text-gray-800 font-semibold"
+              >
+                Products Management
+              </Link>
+            </li>
 
             {/* Only show the management links to the admin user */}
             {user && user.isAdmin && (
@@ -118,16 +126,17 @@ const App = () => {
           <Route path="/products" element={<Products />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/products-management" element={<ProductsManagement />} />
           <Route path="/login" element={<Login onLogin={onLogin} />} />
           <Route path="/register" element={<Register onRegister={onLogin} />} />
 
           {/* Routes for admin-specific pages */}
           {user && user.isAdmin && (
             <>
-              <Route
+              {/* <Route
                 path="/products-management"
                 element={<ProductsManagement />}
-              />
+              /> */}
               <Route path="/orders-management" element={<OrdersManagement />} />
             </>
           )}
