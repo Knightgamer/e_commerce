@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUserContext } from ".././components/userContext"; // Adjust the path as needed
 
 const Login = ({ onLogin }) => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const Login = ({ onLogin }) => {
   const handleLogin = async () => {
     try {
       // Perform login logic
-      const response = await axios.post("http://localhost:5000/api/login", {
+      const response = await axios.post("http://localhost:5000/users/login", {
         email,
         password,
       });

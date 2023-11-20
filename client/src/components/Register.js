@@ -6,7 +6,7 @@ import axios from "axios";
 const Register = ({ onRegister }) => {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
-  const [surname, setSurname] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -20,12 +20,15 @@ const Register = ({ onRegister }) => {
       }
 
       // Perform registration logic
-      const response = await axios.post("http://localhost:5000/api/register", {
-        firstName,
-        surname,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/users/register",
+        {
+          firstName,
+          lastName,
+          email,
+          password,
+        }
+      );
 
       console.log(response.data.message);
 
@@ -57,11 +60,11 @@ const Register = ({ onRegister }) => {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Surname:
+            LastName:
             <input
               type="text"
-              value={surname}
-              onChange={(e) => setSurname(e.target.value)}
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </label>
