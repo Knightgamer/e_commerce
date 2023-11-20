@@ -1,7 +1,11 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Item = require('../models/Item');
+const itemController = require("../controller/itemController");
 
-// Define your routes and controllers here...
+router.post("/", itemController.createItem);
+router.get("/", itemController.getAllItems);
+router.get("/:id", itemController.getItemById);
+router.put("/:id", itemController.updateItem);
+router.delete("/:id", itemController.deleteItem);
 
 module.exports = router;

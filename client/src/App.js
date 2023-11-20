@@ -13,7 +13,7 @@ import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import ProductsManagement from "./components/ProductsManagement"; // Import ProductsManagement component
+import ProductsManagement from "./components/admin/ProductsManagement"; // Import ProductsManagement component
 import OrdersManagement from "./components/OrdersManagement"; // Import OrdersManagement component
 import "./App.css";
 
