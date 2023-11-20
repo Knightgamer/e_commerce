@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-require("dotenv").config(); // Load environment variables
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,9 +24,34 @@ const userSchema = new mongoose.Schema({
   surname: String,
   email: String,
   password: String,
+  isAdmin: { type: Boolean, default: false }, // Add isAdmin field
 });
 
 const User = mongoose.model("User", userSchema);
+
+// Admin credentials
+const ADMIN_EMAIL = "rickyelvis@usiu.ac.ke";
+const ADMIN_PASSWORD = "rickyelvis";
+
+// Check if the admin user exists, create if not
+async function createAdminUser() {
+  const adminUser = await User.findOne({ email: ADMIN_EMAIL });
+
+  if (!adminUser) {
+    const newAdminUser = new User({
+      firstName: "Ricky",
+      surname: "Elvis",
+      email: ADMIN_EMAIL,
+      password: ADMIN_PASSWORD,
+      isAdmin: true,
+    });
+
+    await newAdminUser.save();
+  }
+}
+
+// Call the function to create the admin user
+createAdminUser();
 
 // User registration route
 app.post("/api/register", async (req, res) => {
@@ -76,7 +101,6 @@ app.post("/api/login", async (req, res) => {
 });
 
 // Define your existing routes and controllers here...
-
 app.use("/items", require("./routes/itemsRoutes"));
 app.use("/order", require("./routes/orderRoutes"));
 

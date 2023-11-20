@@ -13,8 +13,8 @@ import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import ProductsManagement from "./components/admin/ProductsManagement"; // Import ProductsManagement component
-import OrdersManagement from "./components/OrdersManagement"; // Import OrdersManagement component
+import ProductsManagement from "./components/admin/ProductsManagement";
+import OrdersManagement from "./components/OrdersManagement";
 import "./App.css";
 
 const App = () => {
@@ -27,6 +27,8 @@ const App = () => {
   const onLogout = () => {
     setUser(null);
   };
+
+  const isAdmin = user && user.isAdmin;
 
   return (
     <Router>
@@ -66,38 +68,29 @@ const App = () => {
                 Checkout
               </Link>
             </li>
-            <li>
-              <Link
-                to="/products-management"
-                className="text-gray-600 hover:text-gray-800 font-semibold"
-              >
-                Products Management
-              </Link>
-            </li>
 
-            {/* Only show the management links to the admin user */}
-            {user && user.isAdmin && (
-              <>
-                <li>
-                  <Link
-                    to="/products-management"
-                    className="text-gray-600 hover:text-gray-800 font-semibold"
-                  >
-                    Products Management
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/orders-management"
-                    className="text-gray-600 hover:text-gray-800 font-semibold"
-                  >
-                    Orders Management
-                  </Link>
-                </li>
-              </>
+            {isAdmin && (
+              <li>
+                <Link
+                  to="/products-management"
+                  className="text-gray-600 hover:text-gray-800 font-semibold"
+                >
+                  Products Management
+                </Link>
+              </li>
             )}
 
-            {/* Show login or logout button based on authentication */}
+            {isAdmin && (
+              <li>
+                <Link
+                  to="/orders-management"
+                  className="text-gray-600 hover:text-gray-800 font-semibold"
+                >
+                  Orders Management
+                </Link>
+              </li>
+            )}
+
             {user ? (
               <li>
                 <button
@@ -126,22 +119,17 @@ const App = () => {
           <Route path="/products" element={<Products />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/products-management" element={<ProductsManagement />} />
+          {isAdmin && (
+            <Route
+              path="/products-management"
+              element={<ProductsManagement />}
+            />
+          )}
           <Route path="/login" element={<Login onLogin={onLogin} />} />
           <Route path="/register" element={<Register onRegister={onLogin} />} />
-
-          {/* Routes for admin-specific pages */}
-          {user && user.isAdmin && (
-            <>
-              {/* <Route
-                path="/products-management"
-                element={<ProductsManagement />}
-              /> */}
-              <Route path="/orders-management" element={<OrdersManagement />} />
-            </>
+          {isAdmin && (
+            <Route path="/orders-management" element={<OrdersManagement />} />
           )}
-
-          {/* Default route for invalid paths */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
