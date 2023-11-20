@@ -1,4 +1,3 @@
-// components/Register.js
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -41,7 +40,7 @@ const Register = ({ onRegister }) => {
   };
 
   return (
-    <div className="bg-white p-6 max-w-md mx-auto my-10 rounded-lg shadow-md">
+    <div className="bg-white p-6 max-w-md mx-auto my-10 rounded-lg shadow-md bg-green-200">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Register</h2>
       <form>
         <div className="mb-4">
@@ -102,7 +101,7 @@ const Register = ({ onRegister }) => {
         <button
           type="button"
           onClick={handleRegister}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
         >
           Register
         </button>
@@ -110,7 +109,7 @@ const Register = ({ onRegister }) => {
 
       <p className="mt-6 text-center text-gray-600">
         Already have an account?{" "}
-        <Link to="/login" className="text-blue-500 hover:text-blue-600">
+        <Link to="/login" className="text-green-500 hover:text-green-600">
           Login
         </Link>
       </p>

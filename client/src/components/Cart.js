@@ -1,4 +1,3 @@
-// client/src/components/Cart.js
 import React, { useState } from "react";
 
 const Cart = () => {
@@ -14,12 +13,12 @@ const Cart = () => {
   };
 
   return (
-    <div className="cart bg-white p-6 shadow rounded-lg">
+    <div className="cart bg-green-200 p-6 shadow rounded-lg">
       <h1 className="text-2xl font-bold text-gray-800 mb-4">Shopping Cart</h1>
-      <ul className="divide-y divide-gray-200">
+      <ul className="divide-y divide-gray-300">
         {cartItems.map((item, index) => (
           <li key={index} className="py-4 flex justify-between items-center">
-            <span className="text-gray-600">
+            <span className="text-gray-700">
               {item.name} - <span className="font-semibold">${item.price}</span>
             </span>
             <button

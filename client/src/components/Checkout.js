@@ -1,4 +1,3 @@
-// client/src/components/Checkout.js
 import React, { useState } from "react";
 
 const Checkout = ({ cartItems }) => {
@@ -10,9 +9,9 @@ const Checkout = ({ cartItems }) => {
   };
 
   return (
-    <div className="checkout bg-white p-8 shadow-md rounded-lg max-w-md mx-auto my-10">
+    <div className="checkout bg-green-200 p-6 shadow rounded-lg max-w-md mx-auto my-10 flex flex-col items-center">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">Checkout</h1>
-      <div className="mb-4">
+      <div className="mb-4 w-full">
         <label className="block text-gray-700 text-sm font-bold mb-2">
           Shipping Address:
         </label>
@@ -25,7 +24,7 @@ const Checkout = ({ cartItems }) => {
       </div>
       <button
         onClick={handleCheckout}
-        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
         Complete Purchase
       </button>

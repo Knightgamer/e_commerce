@@ -1,19 +1,18 @@
-/* client/src/App.css */
+/* Reset default styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #f4f4f4;
 }
 
-/* Add more global styles as needed */
-
-.home, .products, .cart, .checkout, .login, .register {
-  max-width: 800px;
+/* Global container styles */
+.container {
+  max-width: 1200px;
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
   background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 ul {
@@ -25,30 +24,42 @@ li {
   margin-bottom: 10px;
 }
 
-button {
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
+/* Updated button styles */
+.button {
   display: inline-block;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
   font-size: 16px;
-  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #45a049;
+.button-primary {
+  background-color: #ff6b6b;
+  color: #fff;
 }
-/* App.css */
-/* App.css */
+
+.button-primary:hover {
+  background-color: #ff5252;
+}
+
+.button-secondary {
+  background-color: #4ecdc4;
+  color: #fff;
+}
+
+.button-secondary:hover {
+  background-color: #3daca7;
+}
+
+/* Navigation bar */
 nav {
   background-color: #333;
   padding: 10px;
   display: flex;
-  justify-content: space-between; /* Align items at the start and end */
-  align-items: center; /* Vertically center items */
+  justify-content: space-between;
+  align-items: center;
 }
 
 .nav-links {
@@ -58,32 +69,22 @@ nav {
 
 .nav-links a {
   text-decoration: none;
-  color: white;
+  color: #fff;
+  font-weight: bold;
+  transition: color 0.3s ease;
 }
 
-.login-btn {
-  display: flex;
-  align-items: center;
+.nav-links a:hover {
+  color: #ffa500;
 }
 
 .login-btn a {
   text-decoration: none;
-  color: white;
-}
-
-.login-btn button {
-  background-color: #4caf50;
   color: #fff;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 4px;
-  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.3s ease;
 }
 
-.login-btn button:hover {
-  background-color: #45a049;
+.login-btn a:hover {
+  color: #ffa500;
 }
