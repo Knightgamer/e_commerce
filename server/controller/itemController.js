@@ -63,6 +63,23 @@ const updateItem = asyncHandler(async (req, res) => {
   }
 });
 
+// Mark an item as sold
+const markAsSold = async (req, res) => {
+  try {
+    const item = await Item.findById(req.params.id);
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    item.sold = true;
+    await item.save();
+
+    res.status(200).json({ message: "Item marked as sold", item });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // Delete an item
 const deleteItem = asyncHandler(async (req, res) => {
   try {
@@ -84,4 +101,5 @@ module.exports = {
   getItemById,
   updateItem,
   deleteItem,
+  markAsSold,
 };

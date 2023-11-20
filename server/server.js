@@ -77,7 +77,8 @@ app.post("/api/login", async (req, res) => {
 
 // Define your existing routes and controllers here...
 
-app.use("/items", require("./routes/items"));
+app.use("/items", require("./routes/itemsRoutes"));
+app.use("/order", require("./routes/orderRoutes"));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
