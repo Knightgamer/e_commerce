@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const itemController = require("../controller/itemController");
 
+// Place specific routes before parameterized routes
+router.get("/financial-summary", itemController.getFinancialSummary);
+
 // Create a new item
 router.post("/", itemController.createItem);
 

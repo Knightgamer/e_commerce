@@ -3,31 +3,52 @@ import axios from "axios";
 
 const ProductsManagement = () => {
   const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState({ name: "", price: "" });
-
+  const [newProduct, setNewProduct] = useState({
+    name: "",
+    price: "",
+    costPrice: "",
+  });
+  //FINANCIAL-SUMMARY
+  const [financialSummary, setFinancialSummary] = useState({
+    totalSales: 0,
+    totalCapital: 0,
+    profit: 0,
+  });
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/items") // Adjust the endpoint as needed
+      .then((response) => setProducts(response.data))
+      .catch((error) => console.error("Error fetching products:", error));
+  }, []);
   // Fetch products from the backend
   useEffect(() => {
     axios
       .get("http://localhost:5000/items") // Adjust the endpoint as needed
-      .then((response) => {
-        setProducts(response.data);
-      })
+      .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
-  // Handle form input changes
+  // Fetch financial summary from the backend
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/items/financial-summary") // Adjust the endpoint as needed
+      .then((response) => setFinancialSummary(response.data))
+      .catch((error) =>
+        console.error("Error fetching financial summary:", error)
+      );
+  }, []);
+
   const handleInputChange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .post("http://localhost:5000/items", newProduct) // Adjust the endpoint as needed
       .then((response) => {
         setProducts([...products, response.data]);
-        setNewProduct({ name: "", price: "" }); // Reset form
+        setNewProduct({ name: "", price: "", costPrice: "" }); // Reset form
       })
       .catch((error) => console.error("Error adding product:", error));
   };
@@ -67,6 +88,19 @@ const ProductsManagement = () => {
             />
           </label>
         </div>
+        {/* Product Cost Price */}
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Cost Price:
+            <input
+              type="number"
+              name="costPrice"
+              value={newProduct.costPrice}
+              onChange={handleInputChange}
+              className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </label>
+        </div>
         <button
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -86,6 +120,12 @@ const ProductsManagement = () => {
               <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Price
               </th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Cost Price
+              </th>
+              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                Status
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -101,9 +141,40 @@ const ProductsManagement = () => {
                     ${product.price}
                   </p>
                 </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <p className="text-gray-900 whitespace-no-wrap">
+                    ${product.costPrice}
+                  </p>
+                </td>
+                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                  <p className="text-gray-900 whitespace-no-wrap">
+                    {product.sold ? "Sold" : "Available"}
+                  </p>
+                </td>
               </tr>
             ))}
           </tbody>
+          {/* Financial Summary */}
+          <tfoot>
+            <tr>
+              <td colSpan="2" className="font-bold text-right">
+                Total Sales:
+              </td>
+              <td>${financialSummary.totalSales}</td>
+            </tr>
+            <tr>
+              <td colSpan="2" className="font-bold text-right">
+                Total Capital:
+              </td>
+              <td>${financialSummary.totalCapital}</td>
+            </tr>
+            <tr>
+              <td colSpan="2" className="font-bold text-right">
+                Profit:
+              </td>
+              <td>${financialSummary.profit}</td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>

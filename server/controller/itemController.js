@@ -4,14 +4,10 @@ const asyncHandler = require("express-async-handler");
 
 const createItem = asyncHandler(async (req, res) => {
   try {
-    const newItem = new Item({
-      name: req.body.name,
-      price: req.body.price,
-      // Add other fields here
-    });
-
-    const savedItem = await newItem.save();
-    res.status(201).json(savedItem);
+    const { name, price, costPrice } = req.body;
+    const newItem = new Item({ name, price, costPrice });
+    await newItem.save();
+    res.status(201).json(newItem);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -80,6 +76,27 @@ const markAsSold = async (req, res) => {
   }
 };
 
+const getFinancialSummary = asyncHandler(async (req, res) => {
+  try {
+    const items = await Item.find();
+    let totalSales = 0;
+    let totalCapital = 0;
+
+    items.forEach((item) => {
+      if (item.sold) {
+        totalSales += item.price;
+        totalCapital += item.costPrice;
+      }
+    });
+
+    const profit = totalSales - totalCapital;
+
+    res.json({ totalSales, totalCapital, profit });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Delete an item
 const deleteItem = asyncHandler(async (req, res) => {
   try {
@@ -102,4 +119,5 @@ module.exports = {
   updateItem,
   deleteItem,
   markAsSold,
+  getFinancialSummary,
 };

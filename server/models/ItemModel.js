@@ -3,9 +3,10 @@ const mongoose = require("mongoose");
 
 const itemSchema = new mongoose.Schema({
   name: String,
-  price: Number,
+  price: Number, // Selling price
+  costPrice: Number, // Cost price
   sold: { type: Boolean, default: false },
-  // Add more fields as needed
+  // other fields...
 });
 
 module.exports = mongoose.model("Item", itemSchema);
