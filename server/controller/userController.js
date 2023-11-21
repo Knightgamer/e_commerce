@@ -59,7 +59,8 @@ const login = asyncHandler(async (req, res) => {
         id: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
-        email,
+        email: user.email,
+        role: user.role,
       },
     });
   } catch (error) {

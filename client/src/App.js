@@ -1,5 +1,4 @@
-// App.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,32 +9,53 @@ import {
 import Products from "./components/customer/Products";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import ProductsManagement from "./components/admin/ProductsManagement"; // Import ProductsManagement component
+import ProductsManagement from "./components/admin/ProductsManagement";
 import "./App.css";
 
 const App = () => {
-  const [user, setUser] = useState(null);
+  // State to hold the current user's role
+  const [userRole, setUserRole] = useState(localStorage.getItem("userRole"));
 
-  const onLogin = (loggedInUser) => {
-    setUser(loggedInUser);
-  };
+  // Effect to update the role when localStorage changes
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setUserRole(localStorage.getItem("userRole"));
+    };
 
-  const onLogout = () => {
-    setUser(null);
-  };
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        {/* Conditional Routes */}
-        {user && user.role === "customer" && (
+        <Route path="/register" element={<Register />} />
+
+        {/* Routes for logged-in users */}
+        {userRole === "customer" && (
           <Route path="/products" element={<Products />} />
         )}
-        {user && user.role === "administrator" && (
+        {userRole === "administrator" && (
           <Route path="/products-management" element={<ProductsManagement />} />
         )}
-        {/* Other routes */}
+
+        {/* Redirect or Default Route */}
+        <Route
+          path="*"
+          element={
+            <Navigate
+              to={
+                userRole === "administrator"
+                  ? "/products-management"
+                  : "/products"
+              }
+            />
+          }
+        />
       </Routes>
     </Router>
   );
