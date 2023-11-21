@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Make sure to import useNavigate
 import Navigation from "../Navigation"; // Import the Navigation component
 
-const Products = () => {
+const CustomerDashboard = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
@@ -69,4 +69,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default CustomerDashboard;

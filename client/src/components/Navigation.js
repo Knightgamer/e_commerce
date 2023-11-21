@@ -16,20 +16,20 @@ const Navigation = () => {
         {userRole === "customer" && (
           <li>
             <Link
-              to="/products"
+              to="/home"
               className="text-white px-3 py-2 rounded-md text-sm font-medium"
             >
-              Products
+              Home
             </Link>
           </li>
         )}
         {userRole === "administrator" && (
           <li>
             <Link
-              to="/products-management"
+              to="/admin/dashboard"
               className="text-white px-3 py-2 rounded-md text-sm font-medium"
             >
-              Products Management
+              Dashboard
             </Link>
           </li>
         )}

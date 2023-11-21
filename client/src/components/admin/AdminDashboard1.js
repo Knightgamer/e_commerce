@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navigation from "../Navigation"; // Import the Navigation component
 
-const ProductsManagement = () => {
+const AdminDashboard1 = () => {
   const [products, setProducts] = useState([]);
   const [newProduct, setNewProduct] = useState({
     name: "",
@@ -187,4 +187,4 @@ const ProductsManagement = () => {
   );
 };
 
-export default ProductsManagement;
+export default AdminDashboard1;

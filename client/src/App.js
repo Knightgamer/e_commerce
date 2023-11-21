@@ -6,10 +6,10 @@ import {
   Link,
   Navigate,
 } from "react-router-dom";
-import Products from "./components/customer/Products";
+import CustomerDashboard from "./components/customer/CustomerDashboard";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import ProductsManagement from "./components/admin/ProductsManagement";
+import AdminDashboard from "./components/admin/AdminDashboard1";
 import "./App.css";
 
 const App = () => {
@@ -37,10 +37,10 @@ const App = () => {
 
         {/* Routes for logged-in users */}
         {userRole === "customer" && (
-          <Route path="/products" element={<Products />} />
+          <Route path="/home" element={<CustomerDashboard />} />
         )}
         {userRole === "administrator" && (
-          <Route path="/products-management" element={<ProductsManagement />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
         )}
 
         {/* Redirect or Default Route */}
@@ -48,11 +48,7 @@ const App = () => {
           path="*"
           element={
             <Navigate
-              to={
-                userRole === "administrator"
-                  ? "/products-management"
-                  : "/products"
-              }
+              to={userRole === "administrator" ? "/admin/dashboard" : "/home"}
             />
           }
         />

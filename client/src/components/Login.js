@@ -27,9 +27,9 @@ const Login = () => {
       localStorage.setItem("role", user.role);
       // Navigate based on user role
       if (userRole === "customer") {
-        navigate("/products");
+        navigate("/home");
       } else if (userRole === "administrator") {
-        navigate("/products-management");
+        navigate("/admin/dashboard");
       }
     } catch (error) {
       console.error(
