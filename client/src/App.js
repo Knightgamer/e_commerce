@@ -34,7 +34,7 @@ const App = () => {
     <Router>
       <div className="app">
         {/* Logo and Navbar */}
-        <nav className="bg-white shadow">
+        <nav className="nav-links">
           <ul className="flex items-center justify-center space-x-4 py-3">
             <li>
               <Link

@@ -2,12 +2,15 @@
 import React, { useState } from "react";
 
 const Home = ({ user, onLogout }) => {
+  // State for controlling visibility of categories
   const [showCategories, setShowCategories] = useState(false);
 
+  // Logout handler
   const handleLogout = () => {
     onLogout();
   };
 
+  // Toggle categories visibility and scroll to the categories section
   const toggleCategories = () => {
     setShowCategories(!showCategories);
 
@@ -19,12 +22,16 @@ const Home = ({ user, onLogout }) => {
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
+    // Container with background color and styling
+    <div className="content-area p-6 max-w-3xl mx-auto">
+      {/* Heading */}
       <h2 className="text-2xl font-bold text-gray-800 mb-4">
         Welcome to our E-Commerce Site
       </h2>
 
+      {/* Conditional rendering based on user authentication */}
       {user ? (
+        // User is logged in
         <div className="bg-white p-4 shadow rounded-lg mb-6">
           <p className="text-lg text-gray-700">
             Hello, <span className="font-semibold">{user.firstName}</span>!
@@ -37,6 +44,7 @@ const Home = ({ user, onLogout }) => {
           </button>
         </div>
       ) : (
+        // User is not logged in
         <div className="bg-white p-4 shadow rounded-lg mb-6">
           <p className="text-lg text-gray-700">You are not logged in.</p>
           <p className="text-lg text-gray-700">
@@ -59,6 +67,7 @@ const Home = ({ user, onLogout }) => {
         </div>
       )}
 
+      {/* Categories section */}
       <div id="categories-section" className="mt-6">
         {/* Add category sections here */}
       </div>

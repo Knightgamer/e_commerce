@@ -15,7 +15,11 @@ body {
   border-radius: 8px;
   background-color: #fff;
 }
-
+.content-area {
+  background-color: #e9edc9;
+  padding: 20px; /* Add padding to give some space around the content */
+  border-radius: 8px; /* Add border-radius for rounded corners */
+}
 ul {
   list-style: none;
   padding: 0;
@@ -39,21 +43,22 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #a3b18a;
 }
 /* App.css */
-/* App.css */
 nav {
-  background-color: #333;
+  background-color: #344e41;
   padding: 10px;
   display: flex;
-  justify-content: space-between; /* Align items at the start and end */
-  align-items: center; /* Vertically center items */
+  justify-content: space-between; 
+  align-items: center; 
 }
 
 .nav-links {
   display: flex;
   gap: 20px;
+  flex-grow: 1;
+  justify-content: center;
 }
 
 .nav-links a {

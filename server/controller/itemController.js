@@ -1,5 +1,4 @@
-const Item = require("../models/ItemModel"); // Replace with the actual path to your Item model
-
+const Item = require("../models/ItemModel");
 const asyncHandler = require("express-async-handler");
 
 const createItem = asyncHandler(async (req, res) => {
@@ -7,7 +6,8 @@ const createItem = asyncHandler(async (req, res) => {
     const newItem = new Item({
       name: req.body.name,
       price: req.body.price,
-      // Add other fields here
+      costPrice: req.body.costPrice,
+      quantity: req.body.quantity || 0,
     });
 
     const savedItem = await newItem.save();
@@ -17,7 +17,6 @@ const createItem = asyncHandler(async (req, res) => {
   }
 });
 
-// Get all items
 const getAllItems = asyncHandler(async (req, res) => {
   try {
     const items = await Item.find();
@@ -27,7 +26,6 @@ const getAllItems = asyncHandler(async (req, res) => {
   }
 });
 
-// Get a single item by ID
 const getItemById = asyncHandler(async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
@@ -40,7 +38,6 @@ const getItemById = asyncHandler(async (req, res) => {
   }
 });
 
-// Update an item
 const updateItem = asyncHandler(async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
@@ -54,7 +51,12 @@ const updateItem = asyncHandler(async (req, res) => {
     if (req.body.price != null) {
       item.price = req.body.price;
     }
-    // Update other fields here
+    if (req.body.costPrice != null) {
+      item.costPrice = req.body.costPrice;
+    }
+    if (req.body.quantity != null) {
+      item.quantity = req.body.quantity;
+    }
 
     const updatedItem = await item.save();
     res.json(updatedItem);
@@ -63,7 +65,6 @@ const updateItem = asyncHandler(async (req, res) => {
   }
 });
 
-// Mark an item as sold
 const markAsSold = async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
@@ -80,7 +81,6 @@ const markAsSold = async (req, res) => {
   }
 };
 
-// Delete an item
 const deleteItem = asyncHandler(async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
