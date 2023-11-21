@@ -44,6 +44,9 @@ const ProductsManagement = () => {
       })
       .catch((error) => console.error("Error adding product:", error));
   };
+  const filteredProducts = products
+    .filter((product) => !product.sold)
+    .slice(0, 6);
 
   return (
     <div className="p-6 max-w-4xl mx-auto flex flex-col md:flex-row gap-6">
@@ -108,7 +111,7 @@ const ProductsManagement = () => {
 
       {/* Products displayed in a flexbox layout */}
       <div className="md:w-2/3 grid grid-cols-1 gap-6">
-        {products.map((product, index) => (
+        {filteredProducts.map((product, index) => (
           <div key={index} className="bg-white rounded-lg p-6 shadow-md">
             <h3 className="text-lg font-bold mb-2">{product.name}</h3>
             <p>Price: ${product.price}</p>

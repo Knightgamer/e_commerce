@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Home = ({ user, onLogout }) => {
   const [showCategories, setShowCategories] = useState(false);
@@ -24,29 +25,55 @@ const Home = ({ user, onLogout }) => {
       </h2>
 
       {user ? (
-        <div className="bg-white p-4 shadow rounded-lg mb-6">
-          <p className="text-lg text-gray-700">
-            Hello, <span className="font-semibold">{user.firstName}</span>!
-          </p>
-          <button
-            onClick={handleLogout}
-            className="mt-3 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition-colors duration-300"
-          >
-            Logout
-          </button>
-        </div>
+        user.isAdmin ? (
+          <div className="bg-white p-4 shadow rounded-lg mb-6">
+            <p className="text-lg text-gray-700">
+              Welcome, <span className="font-semibold">{user.firstName}</span>! (Admin)
+            </p>
+            <Link
+              to="/products-management"
+              className="block mt-3 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition-colors duration-300"
+            >
+              Go to Product Management
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="mt-3 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition-colors duration-300"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div className="bg-white p-4 shadow rounded-lg mb-6">
+            <p className="text-lg text-gray-700">
+              Hello, <span className="font-semibold">{user.firstName}</span>!
+            </p>
+            <Link
+              to="/products"
+              className="block mt-3 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition-colors duration-300"
+            >
+              Products
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="mt-3 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition-colors duration-300"
+            >
+              Logout
+            </button>
+          </div>
+        )
       ) : (
         <div className="bg-white p-4 shadow rounded-lg mb-6">
           <p className="text-lg text-gray-700">You are not logged in.</p>
           <p className="text-lg text-gray-700">
-            Explore our products and services.
+            Sign in to explore our products and services.
           </p>
-          <button
-            onClick={toggleCategories}
-            className="mt-3 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition-colors duration-300"
+          <Link
+            to="/login"
+            className="block mt-3 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition-colors duration-300"
           >
-            Products
-          </button>
+            Sign In
+          </Link>
           <div className="mt-4">
             <h3 className="text-xl font-semibold text-gray-800">
               Special Offers for New Customers
