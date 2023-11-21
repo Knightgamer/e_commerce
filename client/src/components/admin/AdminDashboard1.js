@@ -8,7 +8,9 @@ const AdminDashboard1 = () => {
     name: "",
     price: "",
     costPrice: "",
+    quantity: "", // Add quantity field
   });
+
   //FINANCIAL-SUMMARY
   const [financialSummary, setFinancialSummary] = useState({
     totalSales: 0,
@@ -45,13 +47,26 @@ const AdminDashboard1 = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const productData = {
+      ...newProduct,
+      initialQuantity: newProduct.quantity, // Add this line
+    };
     axios
-      .post("http://localhost:5000/items", newProduct) // Adjust the endpoint as needed
+      .post("http://localhost:5000/items", productData) // Adjust the endpoint as needed
       .then((response) => {
         setProducts([...products, response.data]);
-        setNewProduct({ name: "", price: "", costPrice: "" }); // Reset form
+        setNewProduct({ name: "", price: "", costPrice: "", quantity: "" }); // Reset form
       })
       .catch((error) => console.error("Error adding product:", error));
+  };
+
+  const handleDelete = async (productId) => {
+    try {
+      await axios.delete(`http://localhost:5000/items/${productId}`);
+      setProducts(products.filter((product) => product._id !== productId));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
   };
 
   return (
@@ -76,6 +91,18 @@ const AdminDashboard1 = () => {
                 type="text"
                 name="name"
                 value={newProduct.name}
+                onChange={handleInputChange}
+                className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </label>
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Quantity:
+              <input
+                type="number"
+                name="quantity"
+                value={newProduct.quantity}
                 onChange={handleInputChange}
                 className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
@@ -123,6 +150,9 @@ const AdminDashboard1 = () => {
                   Product Name
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Quantity
+                </th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Price
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -130,6 +160,9 @@ const AdminDashboard1 = () => {
                 </th>
                 <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Status
+                </th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -139,6 +172,11 @@ const AdminDashboard1 = () => {
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                     <p className="text-gray-900 whitespace-no-wrap">
                       {product.name}
+                    </p>
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <p className="text-gray-900 whitespace-no-wrap">
+                      {product.quantity}
                     </p>
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -153,8 +191,16 @@ const AdminDashboard1 = () => {
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                     <p className="text-gray-900 whitespace-no-wrap">
-                      {product.sold ? "Sold" : "Available"}
+                      {product.quantity === 0 ? "Sold" : "Available"}
                     </p>
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <button
+                      onClick={() => handleDelete(product._id)}
+                      className="text-white-500 hover:text-white-700"
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}

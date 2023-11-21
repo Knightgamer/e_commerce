@@ -16,18 +16,42 @@ const CustomerDashboard = () => {
       })
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
+  const handleQuantityChange = (event, productId) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    setProducts(
+      products.map((product) => {
+        if (product._id === productId) {
+          return { ...product, selectedQuantity: newQuantity };
+        }
+        return product;
+      })
+    );
+  };
 
-  const handlePayment = async (productId) => {
-    // Simulate payment logic
+  const handlePayment = async (productId, selectedQuantity) => {
     try {
-      // Here you would typically integrate with a payment gateway
-      // For simplicity, we're just simulating a successful payment
+      // Simulate payment logic
+      // ...
 
-      // After successful payment, mark the item as sold
-      await axios.patch(`http://localhost:5000/items/${productId}/sold`);
-      // Reload products to update the sold status
-      // In a real-world scenario, you would optimally update the state locally
-      navigate(0); // Refresh the page (or you can fetch the products again)
+      const response = await axios.patch(
+        `http://localhost:5000/items/${productId}/buy`,
+        {
+          quantity: selectedQuantity,
+        }
+      );
+
+      // Update the state locally to reflect the new quantity
+      setProducts(
+        products.map((product) => {
+          if (product._id === productId) {
+            return {
+              ...product,
+              quantity: product.quantity - selectedQuantity,
+            };
+          }
+          return product;
+        })
+      );
     } catch (error) {
       console.error("Error during payment:", error);
     }
@@ -52,15 +76,34 @@ const CustomerDashboard = () => {
                 {product.name}
               </h2>
               <p className="text-gray-600">$ {product.price}</p>
-              {!product.sold && (
-                <button
-                  onClick={() => handlePayment(product._id)}
-                  className="mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                >
-                  Pay and Buy
-                </button>
+              <p className="text-gray-600">
+                Available Quantity: {product.quantity}
+              </p>
+
+              {product.quantity > 0 && (
+                <div>
+                  <input
+                    type="number"
+                    min="0"
+                    max={product.quantity}
+                    value={product.selectedQuantity || 0}
+                    onChange={(e) => handleQuantityChange(e, product._id)}
+                    className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md"
+                  />
+                  <button
+                    onClick={() =>
+                      handlePayment(product._id, product.selectedQuantity)
+                    }
+                    className="mt-3 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  >
+                    Pay and Buy
+                  </button>
+                </div>
               )}
-              {product.sold && <span className="text-red-500">Sold Out</span>}
+
+              {product.quantity === 0 && (
+                <span className="text-red-500">Sold Out</span>
+              )}
             </div>
           ))}
         </div>
