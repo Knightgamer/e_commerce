@@ -1,83 +1,61 @@
-// server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const cors = require('cors');
-require('dotenv').config(); // Load environment variables
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 3000;
 
-// MongoDB connection
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost/e_commerce_db', { useNewUrlParser: true, useUnifiedTopology: true });
+
+// Define a simple model for items
+const itemSchema = new mongoose.Schema({
+  name: String,
+  price: Number,
+  quantity: Number,
 });
 
-// Body parser middleware
+const Item = mongoose.model('Item', itemSchema);
+
+// Middleware
 app.use(bodyParser.json());
-app.use(cors());
 
-// Define User schema and model
-const userSchema = new mongoose.Schema({
-  firstName: String,
-  surname: String,
-  email: String,
-  password: String,
+// Routes
+app.post('/create-account', (req, res) => {
+  // Create a new customer account logic
+  // You can add more details like customer name, address, etc.
+  res.json({ message: 'Account created successfully' });
 });
 
-const User = mongoose.model('User', userSchema);
+app.post('/make-order', async (req, res) => {
+  const { itemId, quantity } = req.body;
 
-// User registration route
-app.post('/api/register', async (req, res) => {
-  try {
-    const { firstName, surname, email, password } = req.body;
+  // Retrieve item details
+  const item = await Item.findById(itemId);
 
-    // Check if the user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
-    }
-
-    // Create a new user
-    const newUser = new User({ firstName, surname, email, password });
-    await newUser.save();
-
-    res.status(201).json({ message: 'User registered successfully', user: newUser });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+  if (!item) {
+    return res.status(404).json({ message: 'Item not found' });
   }
-});
 
-// User login route
-app.post('/api/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    // Check if the user exists
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
-
-    // Check if the password is correct
-    if (user.password !== password) {
-      return res.status(401).json({ message: 'Invalid credentials' });
-    }
-
-    res.status(200).json({ message: 'Login successful', user });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+  // Check if there is enough quantity in stock
+  if (item.quantity < quantity) {
+    return res.status(400).json({ message: 'Not enough stock available' });
   }
+
+  // Update item quantity
+  item.quantity -= quantity;
+  await item.save();
+
+  // Calculate total cost and update total sales and capital
+  const totalCost = item.price * quantity;
+  // You need to have a mechanism to track total sales and capital in your application
+  // For simplicity, we'll just log them for now
+  console.log(`Total Sales: ${totalCost}, Total Capital Used: ${totalCost}`);
+
+  res.json({ message: 'Order placed successfully' });
 });
 
-// Define your existing routes and controllers here...
-
-const itemsRouter = require('./routes/items');
-app.use('/api/items', itemsRouter);
-
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
