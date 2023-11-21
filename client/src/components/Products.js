@@ -43,34 +43,34 @@ const Products = () => {
   };
 
   return (
-    <div className="products p-6 max-w-4xl mx-auto bg-green-200 rounded-lg">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">Products</h1>
+    <div className="products p-6 max-w-4xl mx-auto bg-purple-100 rounded-lg shadow-md">
+      <h1 className="text-3xl font-bold text-purple-800 mb-6">Products</h1>
 
       {/* Displaying products */}
       <div>
         {noProductsMessage ? (
-          <p className="text-gray-700">There are no more products available for sale.</p>
+          <p className="text-purple-700">
+            There are no more products available for sale.
+          </p>
         ) : (
           products.map((product, index) => (
             <div
               key={index}
-              className="mb-4 p-4 border border-gray-200 rounded-lg bg-white"
+              className="mb-4 p-4 border border-purple-200 rounded-lg bg-pink-100"
             >
-              <h2 className="text-xl font-semibold text-gray-700">
+              <h2 className="text-xl font-semibold text-purple-700">
                 {product.name}
               </h2>
-              <p className="text-gray-600">$ {product.price}</p>
+              <p className="text-purple-600">$ {product.price}</p>
               {!product.sold && (
                 <button
                   onClick={() => handlePayment(product._id)}
-                  className="mt-3 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700"
+                  className="mt-3 px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-700 transition-colors duration-300"
                 >
                   Pay and Buy
                 </button>
               )}
-              {product.sold && (
-                <span className="text-red-500">Sold Out</span>
-              )}
+              {product.sold && <span className="text-red-500">Sold Out</span>}
             </div>
           ))
         )}

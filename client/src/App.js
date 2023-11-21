@@ -28,17 +28,23 @@ const App = () => {
     <Router>
       <div className="app">
         {/* Logo and Navbar */}
-        <nav className="bg-green-500 shadow">
+        <nav className="bg-purple-600 shadow">
           <ul className="flex items-center justify-center space-x-4 py-3">
             <li>
-              <Link to="/" className="text-white font-semibold hover:text-gray-200">
+              <Link
+                to="/"
+                className="text-white font-semibold hover:text-pink-200"
+              >
                 Home
               </Link>
             </li>
             {/* Conditionally render Products link */}
             {user && (
               <li>
-                <Link to="/products" className="text-white font-semibold hover:text-gray-200">
+                <Link
+                  to="/products"
+                  className="text-white font-semibold hover:text-pink-200"
+                >
                   Products
                 </Link>
               </li>
@@ -46,7 +52,10 @@ const App = () => {
             {/* Render Products Management link only for admin users */}
             {user && user.isAdmin && (
               <li>
-                <Link to="/products-management" className="text-white font-semibold hover:text-gray-200">
+                <Link
+                  to="/products-management"
+                  className="text-white font-semibold hover:text-pink-200"
+                >
                   Products Management
                 </Link>
               </li>
@@ -54,13 +63,19 @@ const App = () => {
             {/* Render Logout or Login link based on user authentication */}
             {user ? (
               <li>
-                <button onClick={onLogout} className="button button-primary">
+                <button
+                  onClick={onLogout}
+                  className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-700 transition-colors duration-300"
+                >
                   Logout
                 </button>
               </li>
             ) : (
               <li>
-                <Link to="/login" className="login-btn">
+                <Link
+                  to="/login"
+                  className="px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-700 transition-colors duration-300"
+                >
                   Login
                 </Link>
               </li>

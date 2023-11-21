@@ -40,76 +40,76 @@ const Register = ({ onRegister }) => {
   };
 
   return (
-    <div className="bg-white p-6 max-w-md mx-auto my-10 rounded-lg shadow-md bg-green-200">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Register</h2>
+    <div className="bg-purple-100 p-6 max-w-md mx-auto my-10 rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold text-purple-800 mb-6">Register</h2>
       <form>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            First Name:
+          <label className="block text-purple-700 text-sm font-bold mb-2">
+            First and Middle Name:
             <input
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border border-purple-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </label>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Surname:
+          <label className="block text-purple-700 text-sm font-bold mb-2">
+            Last Name:
             <input
               type="text"
               value={surname}
               onChange={(e) => setSurname(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border border-purple-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </label>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block text-purple-700 text-sm font-bold mb-2">
             Email:
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border border-purple-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </label>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block text-purple-700 text-sm font-bold mb-2">
             Password:
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border border-purple-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </label>
         </div>
         <div className="mb-6">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block text-purple-700 text-sm font-bold mb-2">
             Confirm Password:
             <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border border-purple-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </label>
         </div>
         <button
           type="button"
           onClick={handleRegister}
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+          className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
         >
           Register
         </button>
       </form>
 
-      <p className="mt-6 text-center text-gray-600">
+      <p className="mt-6 text-center text-purple-700">
         Already have an account?{" "}
-        <Link to="/login" className="text-green-500 hover:text-green-600">
+        <Link to="/login" className="text-purple-500 hover:text-purple-600">
           Login
         </Link>
       </p>
