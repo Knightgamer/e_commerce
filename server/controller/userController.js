@@ -1,3 +1,4 @@
+
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel"); // Adjust the path as needed
 const bcrypt = require("bcrypt");
@@ -5,7 +6,7 @@ const saltRounds = 10; // You can adjust this based on your security requirement
 
 // Register a new user
 const register = asyncHandler(async (req, res) => {
-  try {
+ try {
     const { firstName, lastName, email, password, role } = req.body;
 
     // Check if the user already exists
@@ -30,15 +31,15 @@ const register = asyncHandler(async (req, res) => {
       message: "User registered successfully",
       user: { id: newUser._id, firstName, lastName, email, role },
     });
-  } catch (error) {
+ } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
-  }
+ }
 });
 
 // User login
 const login = asyncHandler(async (req, res) => {
-  try {
+ try {
     const { email, password } = req.body;
 
     // Check if the user exists
@@ -63,32 +64,32 @@ const login = asyncHandler(async (req, res) => {
         role: user.role,
       },
     });
-  } catch (error) {
+ } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
-  }
+ }
 });
 
 // Other CRUD operations (as placeholders)
 const getAllUsers = asyncHandler(async (req, res) => {
-  try {
+ try {
     const users = await User.find().select("-password"); // Excluding the password from the result
     res.json(users);
-  } catch (error) {
+ } catch (error) {
     res.status(500).json({ message: error.message });
-  }
+ }
 });
 
 const getUserById = asyncHandler(async (req, res) => {
-  // Logic to get a single user by ID
+ // Logic to get a single user by ID
 });
 
 const updateUser = asyncHandler(async (req, res) => {
-  // Logic to update a user
+ // Logic to update a user
 });
 
 const deleteUser = asyncHandler(async (req, res) => {
-  try {
+ try {
     const user = await User.findById(req.params.id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -96,16 +97,19 @@ const deleteUser = asyncHandler(async (req, res) => {
 
     await user.deleteOne({ _id: user._id });
     res.json({ message: "User deleted successfully" });
-  } catch (error) {
+ } catch (error) {
     res.status(500).json({ message: error.message });
-  }
+ }
 });
 
 module.exports = {
-  register,
-  login,
-  getAllUsers,
-  getUserById,
-  updateUser,
-  deleteUser,
+ register,
+ login,
+ getAllUsers,
+ getUserById,
+ updateUser,
+ deleteUser,
 };
+
+//
+//This code provides a basic implementation of user registration and login using Express and MongoDB. It also includes placeholders for other CRUD operations. The comments in the code provide a clear and concise explanation of each section..</s >

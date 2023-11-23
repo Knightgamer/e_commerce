@@ -19,8 +19,8 @@ const Home = ({ user, onLogout }) => {
   };
 
   return (
-    <div className="p-8 max-w-4xl mx-auto bg-purple-100 rounded-xl shadow-lg">
-      <h2 className="text-4xl font-extrabold text-purple-900 mb-8 text-center underline decoration-pink-500">
+    <div className="p-8 max-w-4xl mx-auto bg-purple-100 rounded-xl shadow-lg font-poppins">
+      <h2 className="text-4xl font-extrabold text-purple-900 mb-8 text-center ">
         Welcome to E-buy by Nayana!
       </h2>
 
@@ -40,6 +40,12 @@ const Home = ({ user, onLogout }) => {
                 className="px-5 py-3 bg-purple-600 text-white text-lg rounded-full hover:bg-purple-800 transition-colors duration-300 ease-in-out text-center shadow-md hover:shadow-lg"
               >
                 Go to Product Management
+              </Link>
+              <Link
+                to="/sold-products"
+                className="px-5 py-3 bg-purple-600 text-white text-lg rounded-full hover:bg-purple-800 transition-colors duration-300 ease-in-out text-center shadow-md hover:shadow-lg"
+              >
+                See sold products
               </Link>
               <button
                 onClick={handleLogout}

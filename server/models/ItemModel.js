@@ -6,7 +6,8 @@ const itemSchema = new mongoose.Schema({
   price: Number, // Selling price
   costPrice: Number, // Cost price
   sold: { type: Boolean, default: false },
-  // other fields...
+  stock: Number,
+  initialStock: Number,
 });
 
 module.exports = mongoose.model("Item", itemSchema);

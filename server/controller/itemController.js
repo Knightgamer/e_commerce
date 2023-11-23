@@ -4,8 +4,14 @@ const asyncHandler = require("express-async-handler");
 
 const createItem = asyncHandler(async (req, res) => {
   try {
-    const { name, price, costPrice } = req.body;
-    const newItem = new Item({ name, price, costPrice });
+    const { name, price, costPrice, stock } = req.body;
+    const newItem = new Item({
+      name,
+      price,
+      costPrice,
+      stock,
+      initialStock: stock,
+    });
     await newItem.save();
     res.status(201).json(newItem);
   } catch (error) {
@@ -67,12 +73,16 @@ const markAsSold = async (req, res) => {
       return res.status(404).json({ message: "Item not found" });
     }
 
-    item.sold = true;
-    await item.save();
-
-    res.status(200).json({ message: "Item marked as sold", item });
+    if (item.stock > 0) {
+      item.stock -= 1; // Decrement the quantity
+      item.sold = item.stock === 0; // Mark as sold if quantity is zero
+      await item.save();
+      res.status(200).json({ message: "Item sold", item });
+    } else {
+      res.status(400).json({ message: "Item is already sold out" });
+    }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -83,15 +93,33 @@ const getFinancialSummary = asyncHandler(async (req, res) => {
     let totalCapital = 0;
 
     items.forEach((item) => {
-      if (item.sold) {
-        totalSales += item.price;
-        totalCapital += item.costPrice;
-      }
+      const soldStock = item.initialStock - item.stock;
+      totalSales += item.price * soldStock;
+      totalCapital += item.costPrice * soldStock;
     });
 
     const profit = totalSales - totalCapital;
 
     res.json({ totalSales, totalCapital, profit });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+const purchaseItem = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { stock } = req.body; // The quantity to be purchased
+
+  try {
+    const item = await Item.findById(id);
+    if (!item || item.stock < stock) {
+      return res.status(400).json({ message: "Insufficient stock available" });
+    }
+
+    item.stock -= stock;
+
+    await item.save();
+    res.status(200).json({ message: "Item(s) purchased successfully", item });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -120,4 +148,5 @@ module.exports = {
   deleteItem,
   markAsSold,
   getFinancialSummary,
+  purchaseItem,
 };

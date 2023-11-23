@@ -4,7 +4,8 @@ const itemController = require("../controller/itemController");
 
 // Place specific routes before parameterized routes
 router.get("/financial-summary", itemController.getFinancialSummary);
-
+//route for purchasing
+router.patch("/:id/purchase", itemController.purchaseItem);
 // Create a new item
 router.post("/", itemController.createItem);
 
